@@ -6,14 +6,14 @@ class KvInterface(object):
         pass
 
     def set(self, k, v):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def mset(self, kvs):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def get(self, k):
-        raise NotImplementedError
+        raise NotImplementedError()
 
     def mget(self, ks):
-        raise NotImplementedError
+        raise NotImplementedError()
 
