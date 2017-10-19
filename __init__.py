@@ -43,3 +43,36 @@ if __name__ == '__main__':
     print kv.mset({'a': 'd', 'c': 'd'})
     print kv.mget(['a', 'c'])
     print kv.mget(['a', 'b', 'c'])
+
+    import time
+
+    def time_used(func):
+        def wrapper(*args, **kwargs):
+            start_time = time.time()
+            ret = func(*args, **kwargs)
+            end_time = time.time()
+            print '%s used %ss' % (func.__name__, end_time-start_time)
+            return ret
+        return wrapper
+    # 性能测试
+
+    @time_used
+    def test_set(n):
+        kv = KvFactory.new('mysql://localhost:3306')
+        #kv = KvFactory.new('redis://localhost:6379')
+        #kv = KvFactory.new('mongodb://localhost:27017')
+        #kv = KvFactory.new('mem://localhost')
+        for i in xrange(n):
+            kv.set(str(i), str(i))
+
+    @time_used
+    def test_get(n):
+        kv = KvFactory.new('mysql://localhost:3306')
+        #kv = KvFactory.new('redis://localhost:6379')
+        #kv = KvFactory.new('mongodb://localhost:27017')
+        #kv = KvFactory.new('mem://localhost')
+        for i in xrange(n):
+            kv.get(str(i))
+
+    #test_set(100000)
+    test_get(100000)
