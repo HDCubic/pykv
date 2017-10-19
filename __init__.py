@@ -14,11 +14,16 @@ class KvFactory:
             host = params['ipv6host'] if params.get('ipv6host') else params['ipv4host']
             port = params['port'] if params.get('port') else ''
             return RedisKv(host, port)
+        if schema == 'mysql':
+            from mysql_kv import MysqlKv
+            host = params['ipv6host'] if params.get('ipv6host') else params['ipv4host']
+            port = params['port'] if params.get('port') else ''
+            return MysqlKv(host, port)
         raise Exception('uri error')
 
 if __name__ == '__main__':
-    kv = KvFactory.new()
-    print kv.set('test', 1)
+    kv = KvFactory.new('mysql://localhost:3306')
+    print kv.set('test', '1')
     print kv.get('test')
     print kv.mset({'a': 'd', 'c': 'd'})
     print kv.mget(['a', 'c'])

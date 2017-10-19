@@ -55,7 +55,23 @@ class RedisConnection(Singleton):
         try:
             return self.r.get(k), None
         except Exception as ee:
-            return '', ee.message
+            return None, ee.message
+
+    def mset(self, kvs):
+        try:
+            self.r.mset(kvs)
+            return None
+        except Exception as ee:
+            return ee.message
+
+    def mget(self, ks):
+        if not isinstance(ks, list):
+            ks = [ks]
+        try:
+            vs = self.r.mget(ks)
+            return dict(map(lambda x, y: (x, y), ks, vs)), None
+        except Exception as ee:
+            return None, ee.message
 
 class RedisKv(KvInterface, RedisConnection):
     def __init__(self, host='localhost', port=6379):
@@ -65,24 +81,14 @@ class RedisKv(KvInterface, RedisConnection):
     def set(self, k, v):
         return RedisConnection.set(self, k, v)
 
-    def mset(self, kvs):
-        try:
-            self.r.mset(kvs)
-            return None
-        except Exception as ee:
-            return ee.message
-
     def get(self, k):
         return RedisConnection.get(self, k)
 
+    def mset(self, kvs):
+        return RedisConnection.mset(self, kvs)
+
     def mget(self, ks):
-        if not isinstance(ks, list):
-            ks = [ks]
-        try:
-            vs = self.r.mget(ks)
-            return dict(map(lambda x, y: (x, y), ks, vs)), None
-        except Exception as ee:
-            return '', ee.message
+        return RedisConnection.mget(self, ks)
 
 if __name__ == '__main__':
     import doctest

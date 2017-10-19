@@ -8,10 +8,10 @@ class KvInterface(object):
     def set(self, k, v):
         raise NotImplementedError()
 
-    def mset(self, kvs):
+    def get(self, k):
         raise NotImplementedError()
 
-    def get(self, k):
+    def mset(self, kvs):
         raise NotImplementedError()
 
     def mget(self, ks):
