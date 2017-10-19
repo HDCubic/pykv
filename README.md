@@ -6,13 +6,21 @@ easy key/value save package
 # 用法
 
 	import pykv
-	pykv.KvFactory.new(db_uri)
+	kv = pykv.KvFactory.new(uri)
 
-	db_uri可选值:
-	redis://localhost:6379
-	mysql://localhost:3306
-	mongodb://localhost:27017
-	leveldb://localhost/opt/cache.db
-	file://localhost/opt/cache.db
-	mem://localhost
+	err = kv.set('k', 'v')
+	v, err = kv.get('k')
+
+	err = kv.mset({'a': 'b', 'c': 'd'})
+	kvs, err = kv.mget(['a', 'b', 'c'])
+
+	err是各步操作的结果，为None表示操作成功
+
+	uri可选值参考:
+	使用redis存储: redis://localhost:6379
+	使用mysql存储: mysql://localhost:3306
+	使用mongodb存储: mongodb://localhost:27017
+	使用leveldb存储: leveldb://localhost/opt/cache.db
+	使用文件存储: file://localhost/opt/cache.db
+	内存缓存: mem://localhost
 

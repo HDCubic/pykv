@@ -67,7 +67,7 @@ class MemConnection(Singleton):
         if not isinstance(ks, list):
             ks = [ks]
         try:
-            return dict(map(lambda x: (x, self.cache.get(x)), ks))
+            return dict(map(lambda x: (x, self.cache.get(x)), ks)), None
         except Exception as ee:
             return None, ee.message
 

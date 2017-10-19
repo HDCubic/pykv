@@ -14,18 +14,30 @@ class KvFactory:
             host = params['ipv6host'] if params.get('ipv6host') else params['ipv4host']
             port = params['port'] if params.get('port') else ''
             return RedisKv(host, port)
+
         if schema == 'mysql':
             from mysql_kv import MysqlKv
             host = params['ipv6host'] if params.get('ipv6host') else params['ipv4host']
             port = params['port'] if params.get('port') else ''
             return MysqlKv(host, port)
+
+        if schema == 'mongodb':
+            from mongo_kv import MongoKv
+            host = params['ipv6host'] if params.get('ipv6host') else params['ipv4host']
+            port = params['port'] if params.get('port') else ''
+            return MongoKv(host, port)
+
         if schema == 'mem':
             from mem_kv import MemKv
             return MemKv()
+
         raise Exception('uri error')
 
 if __name__ == '__main__':
-    kv = KvFactory.new('mysql://localhost:3306')
+    #kv = KvFactory.new('mysql://localhost:3306')
+    #kv = KvFactory.new('redis://localhost:6379')
+    #kv = KvFactory.new('mongodb://localhost:27017')
+    kv = KvFactory.new('mem://localhost')
     print kv.set('test', '1')
     print kv.get('test')
     print kv.mset({'a': 'd', 'c': 'd'})
