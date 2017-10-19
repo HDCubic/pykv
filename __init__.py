@@ -19,6 +19,9 @@ class KvFactory:
             host = params['ipv6host'] if params.get('ipv6host') else params['ipv4host']
             port = params['port'] if params.get('port') else ''
             return MysqlKv(host, port)
+        if schema == 'mem':
+            from mem_kv import MemKv
+            return MemKv()
         raise Exception('uri error')
 
 if __name__ == '__main__':
