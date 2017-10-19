@@ -5,10 +5,10 @@ easy key/value save package
 
 # 用法
 
-import pykv
-pykv.KvFactory.new(db_uri)
+	import pykv
+	pykv.KvFactory.new(db_uri)
 
-db_uri可选值:
+	db_uri可选值:
 	redis://localhost:6379
 	mysql://localhost:3306
 	mongodb://localhost:27017
