@@ -9,6 +9,7 @@ class KvFactory:
     def new(uri='redis://localhost:6379'):
         params = uri_utils.parse_uri(uri)
         schema = params['schema']
+
         if schema == 'redis':
             from redis_kv import RedisKv
             host = params['ipv6host'] if params.get('ipv6host') else params['ipv4host']
